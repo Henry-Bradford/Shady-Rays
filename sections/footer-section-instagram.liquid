@@ -1,0 +1,98 @@
+{%- assign item = section.settings -%}
+<div class="container{% if item.fullwidth %}-fluid{% endif %} footer-instagram-section" data-sectionname="index_instagram">
+  <div class="row">
+    <div id="instafeed-{{ section.id }}" class="{% if item.in_line %}instafeed-fluid{% else %}instafeed-col{% if item.grid_5 == "small" %} instafeed-col-item-06{% elsif item.grid_5 == "normal" %} instafeed-col-item-08{% endif %}{% endif %}" data-userid="{{ section.settings.userid }}" data-clientid="{{ section.settings.clientid }}" data-accesstoken="{{ section.settings.accesstoken }}" data-count="{{ section.settings.count }}"></div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Footer Instagram",
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "This section you can disable in customize theme in tab settings: \"Show footer instagram section\""
+    },
+    {
+      "type": "checkbox",
+      "id": "in_line",
+      "label": "Design in line",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "grid_5",
+      "label": "Grid",
+      "default": "none",
+      "options": [
+        {
+          "value": "none",
+          "label": "Grid view. 4 in row"
+        },
+        {
+          "value": "small",
+          "label": "Grid view. 6 in row"
+        },
+        {
+          "value": "normal",
+          "label": "Grid view. 8 in row"
+        }
+      ]
+    },
+    {
+      "type": "checkbox",
+      "id": "fullwidth",
+      "label": "Fullwidth size",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "userid",
+      "label": "User Id",
+      "default": "8185238493",
+	  "info": "[Get Instagram User Id](http:\/\/www.ershad7.com\/InstagramUserID)"
+    },
+    {
+      "type": "text",
+      "id": "clientid",
+      "label": "Client Id",
+      "default": "e62e102e7ba5426daf3f1ee80cd91434",
+	  "info": "[Get a Instagram Client_ID key](http:\/\/darkwhispering.com\/how-to\/get-a-instagram-client_id-key)"
+    },
+    {
+      "type": "text",
+      "id": "accesstoken",
+      "label": "Access Token",
+      "default": "8185238493.e62e102.9760a60f45754a33bef03fe25e148f2e",
+	  "info": "[Instagram access token generator](https:\/\/elfsight.com\/service\/generate-instagram-access-token)"
+    },
+    {
+      "type": "paragraph",
+      "content": "[Instagram access token](https:\/\/elfsight.com\/blog\/2016\/05\/how-to-get-instagram-access-token/)"
+    },
+    {
+      "type": "text",
+      "id": "count",
+      "label": "Images Count",
+      "default": "6",
+	  "info": "Integer"
+    }
+  ]
+}
+{% endschema %}
+{% stylesheet %}
+@media (min-width: 790px){
+  .instafeed-col.instafeed-col-item-06 > *{
+    width: calc(16.6666% - 20px);
+    margin-top: 20px;
+    margin-left: 20px;
+  }
+}
+@media (min-width: 576px) and (max-width: 789px){
+  .instafeed-col.instafeed-col-item-06 > *{
+    width: calc(25% - 20px);
+    margin-top: 20px;
+    margin-left: 20px;
+  }
+}
+{% endstylesheet %}

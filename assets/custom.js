@@ -1,0 +1,1 @@
+$(".container-indent:nth-child(3)").insertBefore("div#shopify-section-footer-template");

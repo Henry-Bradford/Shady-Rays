@@ -1,0 +1,14 @@
+div#judgeme_product_reviews {
+    display: none !important;
+}
+div#shopify-section-product-template div#judgeme_product_reviews {
+    display: block !important;
+}
+
+body.pageproduct.pagefly.eaa2c385 .tt-item.active {
+	display: none !important;
+}
+
+.sc-pZopv.bjKdkd.pf-7b5dd294 {
+	display: none !important;
+}

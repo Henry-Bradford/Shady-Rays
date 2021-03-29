@@ -1,0 +1,577 @@
+{%- assign item = section.settings -%}
+
+<div class="{% if item.top_offset == 'none' %}nomargin {% elsif item.top_offset == 'small' %}tt-offset-small {% endif %}container-indent subsection{{ section.id }}">
+  {% if item.usebgcolor %}<div class="subsectionbg">{% endif %}
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-{{ item.mdsize }} col-lg-{{ item.lgsize }}">
+        <div class="tt-layout-newsletter02">
+          {% if item.text1 != "" %}<h5 class="tt-title">{{ item.text1 }}</h5>{% endif %}
+          {% if item.text2 != "" %}<div class="tt-title-description">{{ item.text2 }}</div>{% endif %}
+
+          <div class="form-default">
+            {%- if settings.use_mailchimp_form -%}
+            {%- if settings.mailchimp_form_action != "" -%}
+            <form action="{{ settings.mailchimp_form_action }}" method="post" name="mc-embedded-subscribe-form" target="_blank">
+              <div class="form-group">
+                <input type="email" name="EMAIL" class="form-control"
+                       value="{% if customer %}{{ customer.email }}{% endif %}"
+                       placeholder="{{ item.subfplholder }}"
+                       >
+                <button type="submit" class="btn">{{ item.subfbtext }}</button>
+              </div>
+            </form>
+            {%- else -%}
+            <strong><u><a href="{{ shop.url }}/admin/themes" style="color: black;">
+              Add newsletter redirect link in:<br>
+              Customize Theme / General Settings / Newsletter / MailChimp form action URL
+              </a></u></strong>
+            {%- endif -%}
+
+            {%- else -%}
+            {%- form 'customer' -%}
+            {{ form.errors | default_errors }}
+            {%- if form.posted_successfully? -%}
+
+            {%- endif -%}
+            <div class="form-group">
+              <input type="hidden" name="contact[tags]" value="newsletter">
+              <input type="email"
+                     name="contact[email]"
+                     class="form-control"
+                     value="{% if customer %}{{ customer.email }}{% endif %}"
+                     placeholder="{{ item.subfplholder }}"
+                     autocomplete="off"
+                     autocapitalize="off"
+                     spellcheck="false" >
+              <button type="submit" class="btn" name="commit">{{ item.subfbtext }}</button>
+            </div>
+            {%- endform -%}
+            {%- endif -%}
+          </div>
+
+          {% if item.text3 != "" %}<p>{{ item.text3 }}</p>{% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+  {% if item.usebgcolor %}</div>{% endif %}
+</div>
+
+<style>
+  .subsection{{ section.id }} .tt-layout-newsletter02 .tt-title {
+    font-size: {{ item.fontsizetext1 }}px;
+    line-height: {{ item.lineheighttext1 }}px;
+    color: {{ item.colortext1 }};
+    font-weight: {{ item.fontweighttext1 }};
+  }
+  .subsection{{ section.id }} .tt-layout-newsletter02 .tt-title-description {
+    font-size: {{ item.fontsizetext2 }}px;
+    line-height: {{ item.lineheighttext2 }}px;
+    font-weight: {{ item.fontweighttext2 }};
+    margin-top: {{ item.text2offset }}px;
+    color: {{ item.colortext2 }};
+  }
+  .subsection{{ section.id }} .tt-layout-newsletter02 p {
+    font-size: {{ item.fontsizetext3 }}px;
+    line-height: {{ item.lineheighttext3 }}px;
+    font-weight: {{ item.fontweighttext3 }};
+    margin-top: {{ item.text3offset }}px;
+    color: {{ item.colortext3 }};
+  }
+  .subsection{{ section.id }} .tt-layout-newsletter02 form {
+    margin-top: {{ item.formoffset }}px;
+  }
+  @media (max-width: 575px) {
+    .subsection{{ section.id }} .tt-layout-newsletter02 .tt-title {
+      font-size: {{ item.fontsizetext1_mobile }}px;
+      line-height: {{ item.lineheighttext1_mobile }}px;
+    }
+    .subsection{{ section.id }} .tt-layout-newsletter02 .tt-title-description {
+      font-size: {{ item.fontsizetext2_mobile }}px;
+      line-height: {{ item.lineheighttext2_mobile }}px;
+      margin-top: {{ item.text2offset_mobile }}px;
+    }
+    .subsection{{ section.id }} .tt-layout-newsletter02 p {
+      font-size: {{ item.fontsizetext3_mobile }}px;
+      line-height: {{ item.lineheighttext3_mobile }}px;
+      margin-top: {{ item.text3offset_mobile }}px;
+    }
+    .subsection{{ section.id }} .tt-layout-newsletter02 form {
+      margin-top: {{ item.formoffset_mobile }}px;
+    }
+  }
+  .subsection{{ section.id }} .tt-layout-newsletter02 form .form-group .form-control {
+    background-color: {{ item.bg_form }};
+    border: 1px solid {{ item.bg_form_bo }};
+  }
+  .subsection{{ section.id }} .tt-layout-newsletter02 form .form-group .form-control:focus {
+    border-color: {{ item.bg_form_boa }};
+  }
+  .subsection{{ section.id }} .tt-layout-newsletter02 form .btn{
+  	color: {{ item.cbtntext }};
+    background: {{ item.bg_color }};
+  }
+  .subsection{{ section.id }} .tt-layout-newsletter02 form .btn:hover{
+  	color: {{ item.cbtntext_a }};
+    background: {{ item.bg_color_a }};
+  }
+  .subsection{{ section.id }} .tt-layout-newsletter02 a {
+    color: {{ item.colorlink }};
+  }
+  .subsection{{ section.id }} .form-default .form-control{
+    color: {{ item.bg_form_text }};
+  }
+  .subsection{{ section.id }} .form-default ::-webkit-input-placeholder {
+    color: {{ item.bg_form_text }};
+  }
+  .subsection{{ section.id }} .form-default ::-moz-placeholder {
+    color: {{ item.bg_form_text }};
+  }
+  .subsection{{ section.id }} .form-default :-moz-placeholder {
+    color: {{ item.bg_form_text }};
+  }
+  .subsection{{ section.id }} .form-default :-ms-input-placeholder {
+    color: {{ item.bg_form_text }};
+  }
+  .subsection{{ section.id }} .subsectionbg{
+    background-color: {{ item.bgco }};
+  }
+  @media (min-width: 1025px){
+    .subsection{{ section.id }} .subsectionbg{
+      padding-top: {{ item.bgdepad }}px;
+      padding-bottom: {{ item.bgdepad_2 }}px;
+    }
+  }
+  @media (max-width: 1024px){
+    .subsection{{ section.id }} .subsectionbg{
+      padding-top: {{ item.bgmopad }}px;
+      padding-bottom: {{ item.bgmopad_2 }}px;
+    }
+  }
+</style>
+
+{% schema %}
+  {
+    "name": "Subscribe form",
+    "settings": [
+      {
+        "type": "select",
+        "id": "top_offset",
+        "label": "Top Offset",
+        "default": "normal",
+        "options": [
+          {
+            "value": "none",
+            "label": "None"
+          },
+          {
+            "value": "small",
+            "label": "Small"
+          },
+          {
+            "value": "normal",
+            "label": "Normal"
+          }
+        ]
+      },
+      {
+        "type":      "range",
+        "id":        "lgsize",
+        "min":       4,
+        "max":       12,
+        "step":      1,
+        "label":     "Big column size for screen > 1024px",
+        "default":   8
+      },
+      {
+        "type":      "range",
+        "id":        "mdsize",
+        "min":       4,
+        "max":       12,
+        "step":      1,
+        "label":     "Medium column size for screen > 791px",
+        "default":   10
+      },
+      {
+        "type": "header",
+        "content": "Content"
+      },
+	  {
+        "type": "textarea",
+        "id": "text1",
+        "label": "Text 1",
+		"default": "Keep in touch"
+      },
+	  {
+        "type": "textarea",
+        "id": "text2",
+        "label": "Text 2",
+		"default": "Enjoy 15% off your first order when you join our mailing list."
+      },
+	  {
+        "type": "textarea",
+        "id": "subfplholder",
+        "label": "Input field text",
+		"default": "Enter your e-mail"
+      },
+	  {
+        "type": "textarea",
+        "id": "subfbtext",
+        "label": "Button name",
+		"default": "Join Us"
+      },
+	  {
+        "type": "textarea",
+        "id": "text3",
+        "label": "Text 3",
+		"default": "By clicking the button you agree to the <a href=\"#\">Privacy Policy<\/a> and <a href=\"#\">Terms and Conditions<\/a>"
+      },
+      {
+        "type": "header",
+        "content": "Desktop texts size"
+      },
+      {
+        "type":      "range",
+        "id":        "fontsizetext1",
+        "min":       14,
+        "max":       100,
+        "step":      1,
+        "unit":      "px",
+        "label":     "Font size text 1",
+        "default":   34
+      },
+      {
+        "type":      "range",
+        "id":        "lineheighttext1",
+        "min":       14,
+        "max":       101,
+        "step":      1,
+        "unit":      "px",
+        "label":     "Line height text 1",
+        "default":   41
+      },
+      {
+        "type":      "range",
+        "id":        "fontweighttext1",
+        "min":       300,
+        "max":       900,
+        "step":      100,
+        "label":     "Font weight text 1",
+        "default":   500
+      },
+      {
+        "type":      "range",
+        "id":        "text2offset",
+        "min":       0,
+        "max":       100,
+        "step":      1,
+        "unit":      "px",
+        "label":     "Text 2 top offset",
+        "default":   10
+      },
+      {
+        "type":      "range",
+        "id":        "fontsizetext2",
+        "min":       14,
+        "max":       100,
+        "step":      1,
+        "unit":      "px",
+        "label":     "Font size text 2",
+        "default":   18
+      },
+      {
+        "type":      "range",
+        "id":        "lineheighttext2",
+        "min":       14,
+        "max":       101,
+        "step":      1,
+        "unit":      "px",
+        "label":     "Line height text 2",
+        "default":   22
+      },
+      {
+        "type":      "range",
+        "id":        "fontweighttext2",
+        "min":       300,
+        "max":       900,
+        "step":      100,
+        "label":     "Font weight text 2",
+        "default":   300
+      },
+      {
+        "type":      "range",
+        "id":        "formoffset",
+        "min":       0,
+        "max":       100,
+        "step":      1,
+        "unit":      "px",
+        "label":     "Form top offset",
+        "default":   34
+      },
+      {
+        "type":      "range",
+        "id":        "text3offset",
+        "min":       0,
+        "max":       100,
+        "step":      1,
+        "unit":      "px",
+        "label":     "Text 3 top offset",
+        "default":   30
+      },
+      {
+        "type":      "range",
+        "id":        "fontsizetext3",
+        "min":       12,
+        "max":       100,
+        "step":      1,
+        "unit":      "px",
+        "label":     "Font size text 3",
+        "default":   14
+      },
+      {
+        "type":      "range",
+        "id":        "lineheighttext3",
+        "min":       14,
+        "max":       101,
+        "step":      1,
+        "unit":      "px",
+        "label":     "Line height text 3",
+        "default":   22
+      },
+      {
+        "type":      "range",
+        "id":        "fontweighttext3",
+        "min":       300,
+        "max":       900,
+        "step":      100,
+        "label":     "Font weight text 3",
+        "default":   300
+      },
+      {
+        "type": "header",
+        "content": "Mobile texts size"
+      },
+      {
+        "type":      "range",
+        "id":        "fontsizetext1_mobile",
+        "min":       14,
+        "max":       100,
+        "step":      1,
+        "unit":      "px",
+        "label":     "Font size text 1 mobile",
+        "default":   31
+      },
+      {
+        "type":      "range",
+        "id":        "lineheighttext1_mobile",
+        "min":       14,
+        "max":       101,
+        "step":      1,
+        "unit":      "px",
+        "label":     "Line height text 1 mobile",
+        "default":   38
+      },
+      {
+        "type":      "range",
+        "id":        "text2offset_mobile",
+        "min":       0,
+        "max":       100,
+        "step":      1,
+        "unit":      "px",
+        "label":     "Text 2 top offset mobile",
+        "default":   10
+      },
+      {
+        "type":      "range",
+        "id":        "fontsizetext2_mobile",
+        "min":       14,
+        "max":       100,
+        "step":      1,
+        "unit":      "px",
+        "label":     "Font size text 2 mobile",
+        "default":   18
+      },
+      {
+        "type":      "range",
+        "id":        "lineheighttext2_mobile",
+        "min":       14,
+        "max":       101,
+        "step":      1,
+        "unit":      "px",
+        "label":     "Line height text 2 mobile",
+        "default":   22
+      },
+      {
+        "type":      "range",
+        "id":        "formoffset_mobile",
+        "min":       0,
+        "max":       100,
+        "step":      1,
+        "unit":      "px",
+        "label":     "Form top offset mobile",
+        "default":   34
+      },
+      {
+        "type":      "range",
+        "id":        "text3offset_mobile",
+        "min":       0,
+        "max":       100,
+        "step":      1,
+        "unit":      "px",
+        "label":     "Text 3 top offset mobile",
+        "default":   30
+      },
+      {
+        "type":      "range",
+        "id":        "fontsizetext3_mobile",
+        "min":       12,
+        "max":       100,
+        "step":      1,
+        "unit":      "px",
+        "label":     "Font size text 3 mobile",
+        "default":   14
+      },
+      {
+        "type":      "range",
+        "id":        "lineheighttext3_mobile",
+        "min":       14,
+        "max":       101,
+        "step":      1,
+        "unit":      "px",
+        "label":     "Line height text 3 mobile",
+        "default":   22
+      },
+      {
+        "type": "header",
+        "content": "Background color"
+      },
+      {
+        "type": "checkbox",
+        "id": "usebgcolor",
+        "label": "Use background color",
+        "default": false
+      },
+      {
+        "type": "color",
+        "id": "bgco",
+        "label": "Background color",
+        "default": "#ffffff"
+      },
+      {
+        "type": "text",
+        "id": "bgdepad",
+        "label": "Vertical top padding desktop",
+		"default": "80",
+		"info": "integer, in px"
+      },
+      {
+        "type": "text",
+        "id": "bgdepad_2",
+        "label": "Vertical bottom padding desktop",
+		"default": "80",
+		"info": "integer, in px"
+      },
+      {
+        "type": "text",
+        "id": "bgmopad",
+        "label": "Vertical top padding mobile",
+		"default": "80",
+		"info": "integer, in px"
+      },
+      {
+        "type": "text",
+        "id": "bgmopad_2",
+        "label": "Vertical bottom padding mobile",
+		"default": "80",
+		"info": "integer, in px"
+      },
+      {
+        "type": "header",
+        "content": "Texts color"
+      },
+      {
+        "type": "color",
+        "id": "colortext1",
+        "label": "Text 1 color",
+        "default": "#191919"
+      },
+      {
+        "type": "color",
+        "id": "colortext2",
+        "label": "Text 2 color",
+        "default": "#777777"
+      },
+      {
+        "type": "color",
+        "id": "colortext3",
+        "label": "Text 3 color",
+        "default": "#777777"
+      },
+      {
+        "type": "color",
+        "id": "colorlink",
+        "label": "Links color",
+        "default": "#2879FE"
+      },
+      {
+        "type": "header",
+        "content": "Form colors"
+      },
+      {
+        "type": "color",
+        "id": "bg_form_text",
+        "label": "Input text color",
+        "default": "#777777"
+      },
+      {
+        "type": "color",
+        "id": "bg_form",
+        "label": "Input background color",
+        "default": "#ffffff"
+      },
+      {
+        "type": "color",
+        "id": "bg_form_bo",
+        "label": "Input border color",
+        "default": "#e9e7e7"
+      },
+      {
+        "type": "color",
+        "id": "bg_form_boa",
+        "label": "Input border focus color",
+        "default": "#2879fe"
+      },
+      {
+        "type": "color",
+        "id": "bg_color",
+        "label": "Background color",
+        "default": "#2879fe"
+      },
+      {
+        "type": "color",
+        "id": "cbtntext",
+        "label": "Text color",
+        "default": "#ffffff"
+      },
+      {
+        "type": "color",
+        "id": "bg_color_a",
+        "label": "Background active color",
+        "default": "#191919"
+      },
+      {
+        "type": "color",
+        "id": "cbtntext_a",
+        "label": "Text active color",
+        "default": "#ffffff"
+      }
+	],
+    "presets": [
+      {
+        "name": "Subscribe form",
+        "category": "Simple Section"
+      }
+    ]
+  }
+{% endschema %}
